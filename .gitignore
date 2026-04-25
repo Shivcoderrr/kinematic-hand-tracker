@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.venv*/
+venv/
+env/
+
+# Local runtime output
+captures/
+assets/demo.mp4
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
