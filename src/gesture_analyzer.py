@@ -44,7 +44,17 @@ class GestureAnalyzer:
 
         return self.distance(hand.point(THUMB_TIP), hand.point(INDEX_TIP))
 
-    def is_pinching(self, hand: TrackedHand) -> bool:
+    def hand_scale(self, hand: TrackedHand) -> float:
+        """Approximate hand size from wrist to middle-finger knuckle."""
+
+        return self.distance(hand.point(WRIST), hand.point(MIDDLE_FINGER_MCP))
+
+    def is_pinching(
+        self,
+        hand: TrackedHand,
+        close_ratio: float = 0.26,
+        min_close_pixels: float = 18.0,
+    ) -> bool:
         """Detect a thumb-index pinch using a hand-size-relative threshold.
 
         A fixed pixel threshold feels different when the hand is close to the
@@ -52,6 +62,6 @@ class GestureAnalyzer:
         rough hand scale, so the pinch stays usable at different distances.
         """
 
-        hand_scale = self.distance(hand.point(WRIST), hand.point(MIDDLE_FINGER_MCP))
-        threshold = max(24.0, hand_scale * 0.35)
+        hand_scale = self.hand_scale(hand)
+        threshold = max(min_close_pixels, hand_scale * close_ratio)
         return self.pinch_distance(hand) <= threshold

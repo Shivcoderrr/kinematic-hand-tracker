@@ -47,6 +47,10 @@ class InteractionConfig:
     """Gesture-control settings."""
 
     pinch_cooldown_seconds: float = 0.8
+    pinch_close_ratio: float = 0.26
+    pinch_release_ratio: float = 0.42
+    pinch_min_close_pixels: float = 18.0
+    pinch_confirm_frames: int = 4
 
 
 CAMERA = CameraConfig()
